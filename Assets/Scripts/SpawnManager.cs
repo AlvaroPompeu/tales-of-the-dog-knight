@@ -7,7 +7,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] GameObject enemyPrefab, powerUpPrefab;
     public int enemyCount = 0;
     private int wave = 0;
-    private float boundaries = 50f;
+    private float boundaries = 20f;
 
     // Update is called once per frame
     void Update()

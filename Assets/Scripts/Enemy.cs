@@ -124,8 +124,8 @@ public class Enemy : MonoBehaviour
 
     public void OnHit(float damage)
     {
-        // The enemy can only be hit if he is not staggered
-        if (!isStaggered)
+        // The enemy can only be hit if he is not staggered and alive
+        if (!isStaggered && currentHealth > 0)
         {
             enemyAnimator.SetTrigger("tHit");
             isStaggered = true;
@@ -142,9 +142,9 @@ public class Enemy : MonoBehaviour
 
                 // Destroy the enemy after some seconds
                 spawnManager.enemyCount--;
-                Destroy(gameObject, 5f);
+                Destroy(gameObject, 3f);
 
-                // Disable this script
+                // Disable the enemy rigid body and this script
                 enemyRigidbody.isKinematic = true;
                 this.enabled = false;
             }
