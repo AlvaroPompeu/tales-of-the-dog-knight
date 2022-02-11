@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRigidbody;
     private Animator playerAnimator;
     private Camera mainCamera;
-    [SerializeField] Slider healthBar;
     [SerializeField] Collider weaponHitbox;
 
     private float moveSpeed = 10f;
@@ -38,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         // Set initial health
         currentHealth = maxHealth;
+        HUDManager.Instance.SetHealth(currentHealth, maxHealth);
     }
 
     // Update is called once per frame
@@ -166,19 +165,22 @@ public class PlayerController : MonoBehaviour
             // The player should only be hit if the enemy is in the "can deal damage" state
             if (collision.gameObject.GetComponent<Enemy>().CanDealDamage)
             {
-                OnHit(collision.gameObject.GetComponent<Enemy>().AttackDamage);
+                OnHit(collision.gameObject.GetComponent<Enemy>().Damage());
             }
         }
     }
 
-    private void OnHit(float damage)
+    private void OnHit(int damage)
     {
         playerAnimator.SetTrigger("tHit");
         isStaggered = true;
         
         // Apply the damage and check if the player dies
         currentHealth -= damage;
-        healthBar.value = currentHealth / maxHealth;
+
+        // Update the HUD
+        HUDManager.Instance.SetHealth(currentHealth, maxHealth);
+
         if (currentHealth <= 0)
         {
             // Play death animation and disable the player to be moved by attacks

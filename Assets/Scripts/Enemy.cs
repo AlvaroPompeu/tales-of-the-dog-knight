@@ -17,20 +17,14 @@ public class Enemy : MonoBehaviour
     protected float attackSpeed = 1f;
     protected float maxHealth = 100f;
     protected float currentHealth;
-    protected float attackDamage = 10f;
+    protected float minDamage = 8f;
+    protected float maxDamage = 15f;
     protected float staggerTime = 0.3f;
 
     private bool isStaggered;
     private bool isAttacking;
 
     public bool CanDealDamage { get; protected set; }
-    public float AttackDamage
-    {
-        get
-        {
-            return attackDamage;
-        }
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -122,11 +116,12 @@ public class Enemy : MonoBehaviour
         CanDealDamage = false;
     }
 
-    public void OnHit(float damage)
+    public void OnHit(int damage, bool critical)
     {
         // The enemy can only be hit if he is not staggered and alive
         if (!isStaggered && currentHealth > 0)
         {
+            HUDManager.Instance.CreateFloatingDamageText(transform.position, damage, critical);
             enemyAnimator.SetTrigger("tHit");
             isStaggered = true;
 
@@ -157,5 +152,12 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(staggerTime);
         isStaggered = false;
+    }
+
+    public int Damage()
+    {
+        float damage = Random.Range(minDamage, maxDamage);
+
+        return Mathf.RoundToInt(damage);
     }
 }
