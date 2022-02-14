@@ -6,30 +6,42 @@ public class CameraMovement : MonoBehaviour
 {
     private Transform playerTransform;
 
-    private float cameraDistance = 15f;
-    public float CameraDistance
-    {
-        get
-        {
-            return cameraDistance;
-        }
-        private set
-        {
-            cameraDistance = value;
-        }
-    }
+    private float minCameraDistance = 5f;
+    private float maxCameraDistance = 15f;
 
-    // Start is called before the first frame update
+    public float CameraDistance { get; private set; }
+
     void Start()
     {
+        // Initialize camera distance with the max value
+        CameraDistance = maxCameraDistance;
+
         // Get the player transform
         playerTransform = GameObject.Find("Player").GetComponent<Transform>();
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+        ZoomCamera();
+    }
+
     void LateUpdate()
     {
         // Keep the camera right above the player
         transform.position = new Vector3(playerTransform.position.x, CameraDistance, playerTransform.position.z);
+    }
+
+    private void ZoomCamera()
+    {
+        // Zoom in
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f && CameraDistance > minCameraDistance)
+        {
+            CameraDistance--;
+        }
+        // Zoom out
+        if (Input.GetAxis("Mouse ScrollWheel") < 0f && CameraDistance < maxCameraDistance)
+        {
+            CameraDistance++;
+        }
     }
 }
