@@ -183,12 +183,21 @@ public class PlayerController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            // Display the game over screen only once
+            if (!playerRigidbody.isKinematic)
+            {
+                GameManager.Instance.GameOver();
+            }
+
             // Play death animation and disable the player to be moved by attacks
             playerAnimator.SetBool("bDead", true);
             playerRigidbody.isKinematic = true;
 
             // Disable this script
             this.enabled = false;
+
+            // Disable the camera movement script
+            mainCamera.GetComponent<CameraMovement>().enabled = false;
         }
 
         StartCoroutine(RemoveStagger());

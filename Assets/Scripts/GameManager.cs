@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [SerializeField] GameObject levelTransition;
+    [SerializeField] GameObject gameOverContainer;
 
     private void Awake()
     {
@@ -24,23 +25,33 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        // Create and play transition animation
-        GameObject levelTransitionObj = Instantiate(levelTransition);
-        DontDestroyOnLoad(levelTransitionObj);
-        Animator transitionAnimator = levelTransitionObj.GetComponentInChildren<Animator>();
-        transitionAnimator.SetTrigger("tStartTransition");
-
-        // Load next level by build index after one second (in the middle of transition)
+        // Load next level by build index
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
+    }
 
-        // Destroy the transition object after the transition ends
-        Destroy(levelTransitionObj, 2f);
+    public void RestartGame()
+    {
+        // Load main menu
+        StartCoroutine(LoadLevel(0));
     }
 
     IEnumerator LoadLevel(int buildIndex)
     {
+        // Create and play transition animation
+        GameObject levelTransitionObj = Instantiate(levelTransition);
+        DontDestroyOnLoad(levelTransitionObj);
+
+        // Destroy the transition object after the transition ends
+        Destroy(levelTransitionObj, 2f);
+
+        // Load level after one second (in the middle of transition)
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(buildIndex);
+    }
+
+    public void GameOver()
+    {
+        Instantiate(gameOverContainer);
     }
 
     public void Quit()
