@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SpikedSlime
+  m_Controller: {fileID: 9100000, guid: fb53b4d3a4f06844c90da7297e9082de, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 8254c95c1caa1da4cb1d22972c413dad, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 24d275f677a39b245a5e175f24e345a0, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: f5d4d1a7dadc5a84d910c492d947ca4f, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: 769c6c4d31c2dad48b0664b47847f7e1, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 21b5bb1519e484148aa30042c43904c0, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: e599599913457404aa360071350dd7c4, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: a4dd2805a4cbc5b428b746ff8cf375c4, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: b374e22ebb027494eaf0e15709666b60, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: f76b9b823f2fc9a469d0c2c780514380, type: 3}
+    m_OverrideClip: {fileID: 7400000, guid: d57bb9f35b232f546851ae283a6a4310, type: 3}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class EnemyBase : MonoBehaviour
 {
     private GameObject player;
     private Animator enemyAnimator;
@@ -11,15 +11,15 @@ public class Enemy : MonoBehaviour
     private Rigidbody enemyRigidbody;
     private Slider healthBar;
     private Vector3 playerDir;
+    private float currentHealth;
 
-    protected float attackRange = 2f;
-    protected float moveSpeed = 8f;
-    protected float attackSpeed = 1f;
-    protected float maxHealth = 100f;
-    protected float currentHealth;
-    protected float minDamage = 8f;
-    protected float maxDamage = 15f;
-    protected float staggerTime = 0.3f;
+    protected float attackRange;
+    protected float moveSpeed;
+    protected float attackSpeed;
+    protected float maxHealth;    
+    protected float minDamage;
+    protected float maxDamage;
+    protected float staggerTime;
 
     private bool isStaggered;
     private bool isAttacking;
@@ -75,7 +75,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void ChasePlayer()
+    private void ChasePlayer()
     {
         // Rotate the enemy towards the player
         FacePlayer();
@@ -87,13 +87,13 @@ public class Enemy : MonoBehaviour
         enemyAnimator.SetBool("bMoving", true);
     }
 
-    void FacePlayer()
+    private void FacePlayer()
     {
         float angle = Mathf.Atan2(playerDir.z, playerDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, -angle + 90f, 0);
     }
 
-    void Attack()
+    protected virtual void Attack()
     {
         // Rotate the enemy towards the player
         FacePlayer();
@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour
         CanDealDamage = false;
     }
 
-    public void OnHit(int damage, bool critical)
+    public virtual void OnHit(int damage, bool critical)
     {
         // The enemy can only be hit if he is not staggered and alive
         if (!isStaggered && currentHealth > 0)
@@ -154,7 +154,7 @@ public class Enemy : MonoBehaviour
         isStaggered = false;
     }
 
-    public int Damage()
+    public virtual int Damage()
     {
         float damage = Random.Range(minDamage, maxDamage);
 

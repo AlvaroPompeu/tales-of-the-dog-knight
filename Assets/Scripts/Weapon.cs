@@ -17,7 +17,7 @@ public class Weapon : MonoBehaviour
             bool critCheck = CriticalHit();
 
             // Hit the enemy
-            other.gameObject.GetComponentInParent<Enemy>().OnHit(Damage(critCheck), critCheck);
+            other.gameObject.GetComponentInParent<EnemyBase>().OnHit(Damage(critCheck), critCheck);
         }
     }
 

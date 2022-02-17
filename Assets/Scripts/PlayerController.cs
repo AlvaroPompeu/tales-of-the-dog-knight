@@ -163,9 +163,9 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             // The player should only be hit if the enemy is in the "can deal damage" state
-            if (collision.gameObject.GetComponent<Enemy>().CanDealDamage)
+            if (collision.gameObject.GetComponent<EnemyBase>().CanDealDamage)
             {
-                OnHit(collision.gameObject.GetComponent<Enemy>().Damage());
+                OnHit(collision.gameObject.GetComponent<EnemyBase>().Damage());
             }
         }
     }

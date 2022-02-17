@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab, powerUpPrefab;
+    [SerializeField] GameObject[] enemyPrefabs;
+    [SerializeField] GameObject powerUpPrefab;
+
     public int enemyCount = 0;
     private int wave = 0;
     private float boundaries = 20f;
@@ -25,7 +27,9 @@ public class SpawnManager : MonoBehaviour
         // Spawn the desired number of enemies on random locations
         for (int i = 0; i < wave; i++)
         {
-            Spawn(enemyPrefab);
+            // Pick one random enemy to spawn
+            int randomIndex = Random.Range(0, enemyPrefabs.Length);
+            Spawn(enemyPrefabs[randomIndex]);
         }
 
         // Spawn one power up

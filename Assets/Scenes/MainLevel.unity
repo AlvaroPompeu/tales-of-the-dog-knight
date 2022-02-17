@@ -3876,7 +3876,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebecf590849d6004f9cb5a0f4e4821db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
+  enemyPrefabs:
+  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
+  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
+  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
+  - {fileID: 2849937596981288562, guid: 15f12bc2cea622b4b8ddb4623066578c, type: 3}
   powerUpPrefab: {fileID: 3301188345701128535, guid: f2990a5f3ed874945a9ac3dcc8b78e54, type: 3}
   enemyCount: 0
 --- !u!4 &590096545
