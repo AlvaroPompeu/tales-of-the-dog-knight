@@ -133,15 +133,7 @@ public class EnemyBase : MonoBehaviour
             healthBar.value = currentHealth / maxHealth;
             if (currentHealth <= 0)
             {
-                enemyAnimator.SetBool("bDead", true);
-
-                // Destroy the enemy after some seconds
-                spawnManager.enemyCount--;
-                Destroy(gameObject, 3f);
-
-                // Disable the enemy rigid body and this script
-                enemyRigidbody.isKinematic = true;
-                this.enabled = false;
+                Die();
             }
 
             StartCoroutine(RemoveStagger());
@@ -152,6 +144,23 @@ public class EnemyBase : MonoBehaviour
     {
         yield return new WaitForSeconds(staggerTime);
         isStaggered = false;
+    }
+
+    protected virtual void Die()
+    {
+        enemyAnimator.SetBool("bDead", true);
+
+        // Destroy the enemy after some seconds
+        spawnManager.enemyCount--;
+        Destroy(gameObject, 3f);
+
+        // Disable the minimap icon
+        SpriteRenderer minimapIcon = GetComponentInChildren<SpriteRenderer>();
+        minimapIcon.enabled = false;
+
+        // Disable the enemy rigid body and this script
+        enemyRigidbody.isKinematic = true;
+        this.enabled = false;
     }
 
     public virtual int Damage()

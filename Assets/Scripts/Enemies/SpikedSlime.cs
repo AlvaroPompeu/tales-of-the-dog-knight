@@ -19,7 +19,7 @@ public class SpikedSlime : EnemyBase
 
     public override void OnHit(int damage, bool critical)
     {
-        float damageMitigation = 1f - 0.4f;
+        float damageMitigation = 1f - damageReduction;
         float fDamage = (float)damage;
         fDamage *= damageMitigation;
         damage = Mathf.RoundToInt(fDamage);
