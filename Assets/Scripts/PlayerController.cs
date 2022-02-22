@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnHit(int damage)
+    public void OnHit(int damage)
     {
         playerAnimator.SetTrigger("tHit");
         isStaggered = true;

@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class EnemyBase : MonoBehaviour
 {
-    private GameObject player;
-    private Animator enemyAnimator;
-    private SpawnManager spawnManager;
-    private Rigidbody enemyRigidbody;
-    private Slider healthBar;
-    private Vector3 playerDir;
-    private float currentHealth;
+    protected GameObject player;
+    protected SpawnManager spawnManager;
+    protected Animator enemyAnimator;
+    protected Rigidbody enemyRigidbody;
+    protected Slider healthBar;
+    protected Vector3 playerDir;
+    protected float currentHealth;
 
     protected float attackRange;
     protected float moveSpeed;
@@ -21,8 +21,8 @@ public class EnemyBase : MonoBehaviour
     protected float maxDamage;
     protected float staggerTime;
 
-    private bool isStaggered;
-    private bool isAttacking;
+    protected bool isStaggered;
+    protected bool isAttacking;
 
     public bool CanDealDamage { get; protected set; }
 
@@ -49,11 +49,8 @@ public class EnemyBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
-        // Get the player direction vector
-        playerDir = (player.transform.position - transform.position).normalized;
-
         // The enemy should only attack if the attack is ready and isn't staggered
         if (!isAttacking && !isStaggered)
         {
@@ -87,8 +84,12 @@ public class EnemyBase : MonoBehaviour
         enemyAnimator.SetBool("bMoving", true);
     }
 
-    private void FacePlayer()
+    protected void FacePlayer()
     {
+        // Get the player direction vector
+        playerDir = (player.transform.position - transform.position).normalized;
+
+        //playerDir = (player.transform.position - transform.position).normalized;
         float angle = Mathf.Atan2(playerDir.z, playerDir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, -angle + 90f, 0);
     }
@@ -109,7 +110,7 @@ public class EnemyBase : MonoBehaviour
         StartCoroutine(AttackCooldown());
     }
 
-    IEnumerator AttackCooldown()
+    protected virtual IEnumerator AttackCooldown()
     {
         yield return new WaitForSeconds(attackSpeed);
         isAttacking = false;

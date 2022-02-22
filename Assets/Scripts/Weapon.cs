@@ -11,8 +11,8 @@ public class Weapon : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the other game object is an enemy
-        if (other.gameObject.CompareTag("Enemy"))
+        // Check if the other game object is an enemy or a boss
+        if (other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("BossHitbox"))
         {
             bool critCheck = CriticalHit();
 

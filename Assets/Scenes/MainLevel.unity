@@ -4156,10 +4156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
-  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
-  - {fileID: 7607241826828231403, guid: f88b6e982c875d449af58d81bc1ae2db, type: 3}
-  - {fileID: 2849937596981288562, guid: 15f12bc2cea622b4b8ddb4623066578c, type: 3}
+  - {fileID: 1654048618693445769, guid: 9ef1f744bef9dc948809ac9f93ad9fa1, type: 3}
+  - {fileID: 1654048618693445769, guid: 9ef1f744bef9dc948809ac9f93ad9fa1, type: 3}
+  - {fileID: 1654048618693445769, guid: 9ef1f744bef9dc948809ac9f93ad9fa1, type: 3}
+  - {fileID: 1654048618693445769, guid: 9ef1f744bef9dc948809ac9f93ad9fa1, type: 3}
   powerUpPrefab: {fileID: 3301188345701128535, guid: f2990a5f3ed874945a9ac3dcc8b78e54, type: 3}
   enemyCount: 0
 --- !u!4 &590096545
@@ -14698,7 +14698,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &2038484751
 PrefabInstance:
@@ -15974,7 +15974,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2069573689897708683, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2069573689897708683, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
       propertyPath: m_LocalPosition.x
