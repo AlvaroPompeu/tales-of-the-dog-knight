@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DamagePopup : MonoBehaviour
+public class BossDamagePopup : MonoBehaviour
 {
-    private TextMeshPro textMesh;
+    private TextMeshProUGUI textMesh;
     
     private float disappearRate = 2f;
-    private float moveRate = 1f;
+    private float moveRate = 20f;
 
     private void Start()
     {
         // Get the text mesh pro component
-        textMesh = GetComponent<TextMeshPro>();
+        textMesh = GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -34,6 +34,6 @@ public class DamagePopup : MonoBehaviour
 
     private void MoveUp()
     {
-        transform.Translate(Vector3.forward * moveRate * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.up * moveRate * Time.deltaTime, Space.World);
     }
 }

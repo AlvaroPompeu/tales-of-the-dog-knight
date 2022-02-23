@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] enemyPrefabs;
+    [SerializeField] GameObject golemBossPrefab;
     [SerializeField] GameObject powerUpPrefab;
 
     public int enemyCount = 0;
@@ -18,7 +19,16 @@ public class SpawnManager : MonoBehaviour
         if (enemyCount == 0)
         {
             wave++;
-            StartWave(wave);
+
+            // Start a boss fight after each 5 waves
+            if (wave % 5 == 0)
+            {
+                StartBossWave();
+            }
+            else
+            {
+                StartWave(wave);
+            }
         }
     }
 
@@ -38,9 +48,19 @@ public class SpawnManager : MonoBehaviour
         enemyCount = wave;
     }
 
+    void StartBossWave()
+    {
+        Spawn(golemBossPrefab);
+
+        // Spawn one power up
+        Spawn(powerUpPrefab);
+
+        enemyCount = 1;
+    }
+
     void Spawn(GameObject prefab)
     {
-        // Generate the random location inside the walls
+        // Generate the random location inside the environment
         Vector3 randomPos = new Vector3(Random.Range(-boundaries, boundaries), prefab.transform.position.y, Random.Range(-boundaries, boundaries));
 
         // Instantiate the prefab

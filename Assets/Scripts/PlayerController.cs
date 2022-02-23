@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private float moveSpeed = 10f;
     private float sprintModifier = 1.3f;
     private float attackSpeed = 0.5f;
-    private float maxHealth = 100f;
+    private float maxHealth = 200f;
     private float currentHealth;
     private float staggerTime = 0.3f;
 

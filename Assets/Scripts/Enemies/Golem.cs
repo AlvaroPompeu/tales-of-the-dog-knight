@@ -7,14 +7,21 @@ public class Golem : EnemyBase
     [SerializeField] Collider rightHand;
     [SerializeField] Collider leftHand;
 
+    private float damageReduction = 0.5f;
+
+    protected string bossName;
+
     private void Awake()
     {
         attackRange = 5f;
         moveSpeed = 5f;
-        maxHealth = 100f;
-        minDamage = 20f;
-        maxDamage = 35f;
+        maxHealth = 500f;
         staggerTime = 0.3f;
+        bossName = "Ancient Golem";
+
+        // Activate boss fight mode
+        HUDManager.Instance.SetupBossFight(true, bossName);
+        HUDManager.Instance.SetBossHealth(maxHealth, maxHealth);
     }
 
     protected override void Attack()
@@ -57,5 +64,53 @@ public class Golem : EnemyBase
         CanDealDamage = false;
         rightHand.enabled = false;
         leftHand.enabled = false;
+    }
+
+    public override void OnHit(int damage, bool critical)
+    {
+        damage = MitigateDamage(damage);
+
+        // The enemy can only be hit if he is not staggered and alive
+        if (!isStaggered && currentHealth > 0)
+        {
+            HUDManager.Instance.CreateBossFloatingDamageText(damage, critical);
+            isStaggered = true;
+
+            // Apply the damage and check if the enemy dies
+            currentHealth -= damage;
+            HUDManager.Instance.SetBossHealth(currentHealth, maxHealth);
+            if (currentHealth <= 0)
+            {
+                Die();
+            }
+
+            StartCoroutine(RemoveStagger());
+        }
+    }
+
+    protected override void Die()
+    {
+        base.Die();
+
+        // Deactivate boss fight mode
+        HUDManager.Instance.SetupBossFight(false, bossName);
+    }
+
+    private int MitigateDamage(int rawDamage)
+    {
+        float damageMitigation = 1f - damageReduction;
+        float fDamage = (float)rawDamage;
+        fDamage *= damageMitigation;
+        int finalDamage = Mathf.RoundToInt(fDamage);
+
+        return finalDamage;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Destructible"))
+        {
+            collision.gameObject.SetActive(false);
+        }
     }
 }  

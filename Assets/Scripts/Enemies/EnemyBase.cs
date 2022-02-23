@@ -61,6 +61,12 @@ public class EnemyBase : MonoBehaviour
                 Attack();
             }
         }
+
+        // Reset enemy y position if he falls below the map
+        if (transform.position.y < -10)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
     }
 
     private void FixedUpdate()
@@ -141,7 +147,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    IEnumerator RemoveStagger()
+    protected IEnumerator RemoveStagger()
     {
         yield return new WaitForSeconds(staggerTime);
         isStaggered = false;
