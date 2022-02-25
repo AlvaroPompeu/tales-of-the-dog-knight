@@ -6,6 +6,7 @@ public class Golem : EnemyBase
 {
     [SerializeField] Collider rightHand;
     [SerializeField] Collider leftHand;
+    [SerializeField] AudioClip attackSound;
 
     private float damageReduction = 0.5f;
 
@@ -26,6 +27,8 @@ public class Golem : EnemyBase
 
     protected override void Attack()
     {
+        audioSource.PlayOneShot(attackSound);
+
         // Rotate the enemy towards the player
         FacePlayer();
 
@@ -74,6 +77,7 @@ public class Golem : EnemyBase
         if (!isStaggered && currentHealth > 0)
         {
             HUDManager.Instance.CreateBossFloatingDamageText(damage, critical);
+            audioSource.PlayOneShot(weaponHitSound);
             isStaggered = true;
 
             // Apply the damage and check if the enemy dies

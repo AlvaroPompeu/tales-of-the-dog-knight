@@ -9,9 +9,12 @@ public class PlayerController : MonoBehaviour
     private Camera mainCamera;
     [SerializeField] Collider weaponHitbox;
 
+    private AudioSource audioSource;
+    [SerializeField] AudioClip weaponSwingSound;
+
     private float moveSpeed = 10f;
     private float sprintModifier = 1.3f;
-    private float attackSpeed = 0.5f;
+    private float attackSpeed = 0.55f;
     private float maxHealth = 200f;
     private float currentHealth;
     private float staggerTime = 0.3f;
@@ -30,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
         // Get the animator component
         playerAnimator = GetComponent<Animator>();
+
+        // Get the audio source component
+        audioSource = GetComponent<AudioSource>();
 
         // Get the main camera
         mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -130,8 +136,9 @@ public class PlayerController : MonoBehaviour
     {
         if (isAttackReady)
         {
-            // Play the attack animation
+            // Play the attack animation and sound
             playerAnimator.SetTrigger("tAttack");
+            audioSource.PlayOneShot(weaponSwingSound);
 
             // Enable the weapon to hit enemies
             weaponHitbox.enabled = true;

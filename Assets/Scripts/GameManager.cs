@@ -9,11 +9,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject levelTransition;
     [SerializeField] GameObject gameOverContainer;
+    [SerializeField] AudioClip menuButtonSFX;
+
+    private AudioSource audioSource;
 
     private void Awake()
     {
         if (Instance == null)
         {
+            // Get self audio source
+            audioSource = GetComponent<AudioSource>();
+
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
@@ -25,6 +31,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
+        audioSource.PlayOneShot(menuButtonSFX);
+
         // Load next level by build index
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
@@ -56,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
+        audioSource.PlayOneShot(menuButtonSFX);
         Application.Quit();
     }
 }

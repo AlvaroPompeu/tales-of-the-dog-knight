@@ -6,6 +6,8 @@ using TMPro;
 
 public class HUDManager : MonoBehaviour
 {
+    BackgroundSoundHelper backgroundSound;
+
     [SerializeField] Slider healthBar;
     [SerializeField] TextMeshProUGUI healthText;
     [SerializeField] GameObject bossHealthBarContainer;
@@ -21,6 +23,7 @@ public class HUDManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        backgroundSound = GameObject.Find("BackgroundSound").GetComponent<BackgroundSoundHelper>();
     }
 
     public void SetHealth(float current, float max)
@@ -54,11 +57,13 @@ public class HUDManager : MonoBehaviour
             bossName.text = name;
             minimap.SetActive(false);
             bossHealthBarContainer.SetActive(true);
+            backgroundSound.SwitchAudioClip("Boss");
         }
         else
         {
             minimap.SetActive(true);
             bossHealthBarContainer.SetActive(false);
+            backgroundSound.SwitchAudioClip("Environment");
         }
     }
 

@@ -24,6 +24,11 @@ public class EnemyBase : MonoBehaviour
     protected bool isStaggered;
     protected bool isAttacking;
 
+    protected AudioSource audioSource;
+    [SerializeField] protected AudioClip weaponHitSound;
+    [SerializeField] protected AudioClip hitSound;
+    [SerializeField] protected AudioClip dieSound;
+
     public bool CanDealDamage { get; protected set; }
 
     // Start is called before the first frame update
@@ -43,6 +48,9 @@ public class EnemyBase : MonoBehaviour
 
         // Get the slider component used for the health bar
         healthBar = GetComponentInChildren<Slider>();
+
+        // Get the audio source component
+        audioSource = GetComponent<AudioSource>();
 
         // Set initial health
         currentHealth = maxHealth;
@@ -130,6 +138,8 @@ public class EnemyBase : MonoBehaviour
         {
             HUDManager.Instance.CreateFloatingDamageText(transform.position, damage, critical);
             enemyAnimator.SetTrigger("tHit");
+            audioSource.PlayOneShot(weaponHitSound);
+            audioSource.PlayOneShot(hitSound);
             isStaggered = true;
 
             //Disable the enemy to deal damage, in case he is hit in the middle of an attack
@@ -156,6 +166,7 @@ public class EnemyBase : MonoBehaviour
     protected virtual void Die()
     {
         enemyAnimator.SetBool("bDead", true);
+        audioSource.PlayOneShot(dieSound);
 
         // Destroy the enemy after some seconds
         spawnManager.enemyCount--;
