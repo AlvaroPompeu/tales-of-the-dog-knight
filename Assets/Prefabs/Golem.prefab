@@ -764,6 +764,7 @@ MonoBehaviour:
   rightHand: {fileID: 2539941008855299947}
   leftHand: {fileID: 1848931673385680040}
   attackSound: {fileID: 8300000, guid: fb1786398f238e94ba081af02ce8150c, type: 3}
+  destroyObjectSound: {fileID: 8300000, guid: 9930d5b4be15bb04c9d0a6fa0d7e6b2e, type: 3}
 --- !u!65 &1970580630380487665
 BoxCollider:
   m_ObjectHideFlags: 0

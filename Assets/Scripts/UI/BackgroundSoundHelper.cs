@@ -28,4 +28,9 @@ public class BackgroundSoundHelper : MonoBehaviour
             audioSource.Play();
         }
     }
+
+    public void StopAudio()
+    {
+        audioSource.Stop();
+    }
 }

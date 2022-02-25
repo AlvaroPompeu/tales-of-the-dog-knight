@@ -16807,6 +16807,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 4050968875394671712, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4050968875394671712, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7520090509788166724, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
       propertyPath: m_Constraints
       value: 112
@@ -16831,5 +16839,17 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1632742961}
+    - target: {fileID: 7520090509788166726, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
+      propertyPath: playerDieSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a558edb2c1706e478b4bf4e7c4424b7, type: 3}
+    - target: {fileID: 7520090509788166726, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
+      propertyPath: playerHitSound
+      value: 
+      objectReference: {fileID: 8300000, guid: d6773d0ff1f6a014086ea289ad5ae2cf, type: 3}
+    - target: {fileID: 7520090509788166726, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}
+      propertyPath: playerHitImpactSound
+      value: 
+      objectReference: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4cf0db93ab8d88f4a9050d8e644099fa, type: 3}

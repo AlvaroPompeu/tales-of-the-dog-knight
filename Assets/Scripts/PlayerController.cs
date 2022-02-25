@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private AudioSource audioSource;
     [SerializeField] AudioClip weaponSwingSound;
+    [SerializeField] AudioClip playerHitSound;
+    [SerializeField] AudioClip playerHitImpactSound;
+    [SerializeField] AudioClip playerDieSound;
 
     private float moveSpeed = 10f;
     private float sprintModifier = 1.3f;
@@ -19,8 +22,9 @@ public class PlayerController : MonoBehaviour
     private float currentHealth;
     private float staggerTime = 0.3f;
 
+    private bool isMoving;
     private bool isStaggered;
-    private bool isSprinting = false;
+    private bool isSprinting;
     private bool isAttackReady = true;
 
     private Vector3 moveDir;
@@ -52,6 +56,7 @@ public class PlayerController : MonoBehaviour
 
         // Get the user inputs
         moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        HandleFootstepSound(moveDir);
 
         // Attack if the player left clicks
         if (Input.GetMouseButton(0) && !isSprinting)
@@ -84,6 +89,24 @@ public class PlayerController : MonoBehaviour
         {
             isSprinting = false;
             moveSpeed /= sprintModifier;
+        }
+    }
+
+    private void HandleFootstepSound(Vector3 movementInput)
+    {
+        // The player started to move
+        if ((movementInput.x != 0 || movementInput.z != 0) && !isMoving)
+        {
+            // Play the footstep sound
+            audioSource.Play();
+            isMoving = true;
+        }
+        // The player stopped to move
+        else if ((movementInput.x == 0 && movementInput.z == 0) && isMoving)
+        {
+            // Stop the footstep sound
+            audioSource.Stop();
+            isMoving = false;
         }
     }
 
@@ -180,6 +203,8 @@ public class PlayerController : MonoBehaviour
     public void OnHit(int damage)
     {
         playerAnimator.SetTrigger("tHit");
+        audioSource.PlayOneShot(playerHitImpactSound);
+        audioSource.PlayOneShot(playerHitSound);
         isStaggered = true;
         
         // Apply the damage and check if the player dies
@@ -212,6 +237,9 @@ public class PlayerController : MonoBehaviour
 
         // Play death animation and disable the player to be moved by attacks
         playerAnimator.SetBool("bDead", true);
+        audioSource.PlayOneShot(playerDieSound);
+        audioSource.enabled = false;
+        HUDManager.Instance.StopAudio();
         playerRigidbody.isKinematic = true;
 
         // Disable the camera movement script

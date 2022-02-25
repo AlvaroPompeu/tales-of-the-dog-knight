@@ -67,6 +67,11 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    public void StopAudio()
+    {
+        backgroundSound.StopAudio();
+    }
+
     public void CreateFloatingDamageText(Vector3 position, float value, bool critical)
     {
         // Fix the y position

@@ -7,6 +7,7 @@ public class Golem : EnemyBase
     [SerializeField] Collider rightHand;
     [SerializeField] Collider leftHand;
     [SerializeField] AudioClip attackSound;
+    [SerializeField] AudioClip destroyObjectSound;
 
     private float damageReduction = 0.5f;
 
@@ -114,6 +115,7 @@ public class Golem : EnemyBase
     {
         if (collision.gameObject.CompareTag("Destructible"))
         {
+            audioSource.PlayOneShot(destroyObjectSound);
             collision.gameObject.SetActive(false);
         }
     }
