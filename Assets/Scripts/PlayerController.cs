@@ -10,13 +10,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider weaponHitbox;
 
     private AudioSource audioSource;
+    [SerializeField] AudioClip normalFootstep;
+    [SerializeField] AudioClip waterFootstep;
     [SerializeField] AudioClip weaponSwingSound;
     [SerializeField] AudioClip playerHitSound;
     [SerializeField] AudioClip playerHitImpactSound;
     [SerializeField] AudioClip playerDieSound;
+    [SerializeField] AudioClip playerEatSound;
 
-    private float moveSpeed = 10f;
-    private float sprintModifier = 1.3f;
+    private float moveSpeed = 9f;
+    private float sprintModifier = 1.35f;
+    private float waterModifier = 0.6f;
     private float attackSpeed = 0.55f;
     private float maxHealth = 200f;
     private float currentHealth;
@@ -77,7 +81,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void HandleSprint()
+    private void HandleSprint()
     {
         // Increase or decrease the speed if player is holding shift (sprinting)
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -89,6 +93,30 @@ public class PlayerController : MonoBehaviour
         {
             isSprinting = false;
             moveSpeed /= sprintModifier;
+        }
+    }
+
+    private void HandleWater(bool isOnWater)
+    {
+        if (isOnWater)
+        {
+            // Set water footstep sound and slow the player
+            audioSource.clip = waterFootstep;
+            if (isMoving)
+            {
+                audioSource.Play();
+            }
+            moveSpeed *= waterModifier;
+        }
+        else
+        {
+            // Set normal footstep sound
+            audioSource.clip = normalFootstep;
+            if (isMoving)
+            {
+                audioSource.Play();
+            }
+            moveSpeed /= waterModifier;
         }
     }
 
@@ -181,10 +209,23 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Collect the power up
-        if (other.gameObject.CompareTag("PowerUp"))
+        // Collect the food
+        if (other.gameObject.CompareTag("Food"))
         {
-            PickPowerUp(other.gameObject);
+            PickUpFood(other.gameObject);
+        }
+
+        if (other.gameObject.CompareTag("Water"))
+        {
+            HandleWater(true);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            HandleWater(false);
         }
     }
 
@@ -249,8 +290,25 @@ public class PlayerController : MonoBehaviour
         this.enabled = false;
     }
 
-    private void PickPowerUp(GameObject powerUp)
+    private void PickUpFood(GameObject food)
     {
-        Destroy(powerUp);
+        int healthToHeal = food.GetComponent<Food>().healthHealed;
+        HealPlayer(healthToHeal);
+        audioSource.PlayOneShot(playerEatSound);
+        Destroy(food);
+    }
+
+    private void HealPlayer(int healAmount)
+    {
+        currentHealth += healAmount;
+
+        // Prevent overheal
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        // Update the HUD
+        HUDManager.Instance.SetHealth(currentHealth, maxHealth);
     }
 }

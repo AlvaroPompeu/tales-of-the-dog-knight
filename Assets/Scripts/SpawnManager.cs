@@ -5,14 +5,14 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] GameObject[] enemyPrefabs;
+    [SerializeField] GameObject[] foodPrefabs;
     [SerializeField] GameObject golemBossPrefab;
-    [SerializeField] GameObject powerUpPrefab;
 
     public int enemyCount = 0;
     private int wave = 0;
     private float boundaries = 20f;
+    private float foodSpawnChance = 0.6f;
 
-    // Update is called once per frame
     void Update()
     {
         // Check if there are enemies alive and spawn the next wave if dont
@@ -29,10 +29,12 @@ public class SpawnManager : MonoBehaviour
             {
                 StartWave(wave);
             }
+
+            SpawnFood();
         }
     }
 
-    void StartWave(int wave)
+    private void StartWave(int wave)
     {
         // Spawn the desired number of enemies on random locations
         for (int i = 0; i < wave; i++)
@@ -42,23 +44,29 @@ public class SpawnManager : MonoBehaviour
             Spawn(enemyPrefabs[randomIndex]);
         }
 
-        // Spawn one power up
-        Spawn(powerUpPrefab);
-
         enemyCount = wave;
     }
 
-    void StartBossWave()
+    private void StartBossWave()
     {
         Spawn(golemBossPrefab);
-
-        // Spawn one power up
-        Spawn(powerUpPrefab);
 
         enemyCount = 1;
     }
 
-    void Spawn(GameObject prefab)
+    private void SpawnFood()
+    {
+        float foodSpawnCheck = Random.Range(0, 1f);
+
+        if (foodSpawnCheck <= foodSpawnChance)
+        {
+            // Pick one random food to spawn
+            int randomIndex = Random.Range(0, foodPrefabs.Length);
+            Spawn(foodPrefabs[randomIndex]);
+        }
+    }
+
+    private void Spawn(GameObject prefab)
     {
         // Generate the random location inside the environment
         Vector3 randomPos = new Vector3(Random.Range(-boundaries, boundaries), prefab.transform.position.y, Random.Range(-boundaries, boundaries));
